@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - DATABASE_URL=jdbc:mysql://db:3306/
+      - DATABASE_USER=my_user
+      - DATABASE_PASSWORD=my_password
+    ports:
+      - "8080:8080"
+  db:
+    image: "mysql:8.1"
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: my_root_password
+      MYSQL_DATABASE: todolist
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+volumes:
+  db-data:
+
