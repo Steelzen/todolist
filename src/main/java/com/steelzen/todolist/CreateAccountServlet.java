@@ -2,6 +2,7 @@ package com.steelzen.todolist;
 
 import java.io.*;
 
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -16,6 +17,7 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
     private Connection con = null;
     private Statement stmt = null;
     private PreparedStatement preparedStatement = null;
+    private HikariDataSource ds = DataSource.getDataSource();
 
 //    private String adminUsername = "admin";
 //    private String hashedAdminPassword = BCrypt.hashpw("Zkxksk88!!", BCrypt.gensalt());
@@ -23,20 +25,19 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
+
         resp.setContentType("text/html");
 
         out.println("<html><body>");
         out.println("<h1>Create Account Test</h1>");
 
-        try {
-            // Load the driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
+        try{
             // Connect to MySQL server
-            con = DriverManager.getConnection(mySqlUrl, rootUser, rootPassword);
+            con = ds.getConnection();
 
             // Check and Create Database and Table
             stmt = con.createStatement();
+
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS todolist");
             stmt.executeUpdate("USE todolist");
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS USERS (id INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR(50) UNIQUE NOT NULL, hashed_password VARCHAR(128) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
@@ -65,26 +66,9 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
 
             // Close resources
             rs.close();
-            stmt.close();
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
             out.println("An error occurred: " + e.getMessage());
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (Exception e) {
-                    // ignore
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    // ignore
-                }
-            }
         }
 
         out.println("</body></html>");
@@ -102,11 +86,9 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
         System.out.println("Hashed Password: " + hashedPassword);
 
         try {
-            // Load the driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Connect to MySQL server
-            con = DriverManager.getConnection(mySqlUrl, rootUser, rootPassword);
+            con = ds.getConnection();
+
 
             // Check and Create Database and Table
             stmt = con.createStatement();
@@ -134,9 +116,6 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
             session.setAttribute("username", username);
             req.getRequestDispatcher("Dashboard.jsp").forward(req, resp);
 
-            // Close resources
-            stmt.close();
-            con.close();
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
             if(e.getErrorCode() == 1062) {

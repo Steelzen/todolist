@@ -2,13 +2,13 @@ package com.steelzen.todolist;
 
 import java.io.*;
 
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -16,6 +16,7 @@ import java.sql.Statement;
 public class LoginServlet extends HttpServlet implements DataBaseEnv {
     private Connection con = null;
     private Statement stmt = null;
+    private HikariDataSource ds = DataSource.getDataSource();
 
     private boolean userMatched (ResultSet users, String enteredUsername, String enteredPassword) {
         try {
@@ -50,12 +51,10 @@ public class LoginServlet extends HttpServlet implements DataBaseEnv {
         String inputPassword = req.getParameter("password");
 
         try {
-            // Load the driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Connect to MySQL server
-            con = DriverManager.getConnection(mySqlUrl, rootUser, rootPassword);
+            con = ds.getConnection();
 
+            // Create statement
             stmt = con.createStatement();
             stmt.executeUpdate("USE todolist");
 
@@ -76,21 +75,9 @@ public class LoginServlet extends HttpServlet implements DataBaseEnv {
                 req.getRequestDispatcher("/index.jsp").forward(req, resp);
                 resp.sendRedirect("index.jsp");
             }
-
-            // Close
-            con.close();
-            stmt.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
-        }
-        finally {
-            try {
-                if (stmt != null) stmt.close();
-                if (con != null) con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }
