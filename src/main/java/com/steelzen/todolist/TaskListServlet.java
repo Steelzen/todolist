@@ -36,7 +36,8 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
             // Select all data from table
             ResultSet rs = stmt.executeQuery("SELECT * FROM TASKS");
 
-            resp.sendRedirect("Dashboard.jsp");
+            req.setAttribute("tasks", rs);
+            req.getRequestDispatcher("Dashboard.jsp").forward(req, resp);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
 
            preparedStatement.executeUpdate();
 
-           resp.sendRedirect("Dashboard.jsp");
+           resp.sendRedirect("/tasks");
 
         } catch (Exception e) {
             e.printStackTrace();

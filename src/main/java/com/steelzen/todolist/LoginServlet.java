@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet implements DataBaseEnv {
                 System.out.println("Login Success!");
                 HttpSession session = req.getSession();
                 session.setAttribute("username", inputUsername);
-                resp.sendRedirect("Dashboard.jsp");
+                resp.sendRedirect("/tasks");
 
             } else {
                 System.out.println("Login Fail!");

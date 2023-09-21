@@ -114,8 +114,7 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
 
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
-            resp.sendRedirect("Dashboard.jsp");
-
+            resp.sendRedirect("/tasks");
 
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
