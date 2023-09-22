@@ -8,6 +8,10 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -17,6 +21,7 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
     private Statement stmt = null;
     private PreparedStatement preparedStatement = null;
     private HikariDataSource ds = DataSource.getDataSource();
+    private HttpSession session;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,6 +30,10 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
         // get session to retrieve username for foreign key
 
         try {
+            // Get username from session
+            session = req.getSession();
+            String username = (String) session.getAttribute("username");
+
             // Connect to MySQL server
             con = ds.getConnection();
 
@@ -34,9 +43,24 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS TASKS (task_id INT PRIMARY KEY AUTO_INCREMENT, task VARCHAR(500) NOT NULL, username VARCHAR(50), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, done TINYINT(1), FOREIGN KEY (username) REFERENCES USERS(username))");
 
             // Select all data from table
-            ResultSet rs = stmt.executeQuery("SELECT * FROM TASKS");
+            String query = "SELECT * FROM TASKS WHERE username = ?";
+            preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
 
-            req.setAttribute("tasks", rs);
+            // Store each rows and pass to jsp
+            List<Map<String, Object>> rows = new ArrayList<>();
+
+            while(rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("id", rs.getObject("task_id"));
+                row.put("task", rs.getObject("task"));
+                row.put("time", rs.getObject("created_at"));
+                row.put("done", rs.getObject("done"));
+
+                rows.add(row);
+            }
+            req.setAttribute("tasks", rows);
             req.getRequestDispatcher("Dashboard.jsp").forward(req, resp);
 
         } catch (Exception e) {
@@ -59,7 +83,7 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
             stmt.executeUpdate("USE todolist");
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS TASKS (task_id INT PRIMARY KEY AUTO_INCREMENT, task VARCHAR(500) NOT NULL, username VARCHAR(50), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, done TINYINT(1), FOREIGN KEY (username) REFERENCES USERS(username))");
 
-            HttpSession session = req.getSession();
+            session = req.getSession();
             String username = (String) session.getAttribute("username");
 
             // Insert data into TASKS table

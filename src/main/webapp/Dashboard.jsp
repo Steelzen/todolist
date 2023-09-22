@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.sql.ResultSet" %><%--
   Created by IntelliJ IDEA.
   User: kwontaehyung
   Date: 06/09/2023
@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +30,12 @@
         <input type="text" name="task" placeholder="Enter task" required minlength="3">
         <button type="submit" class="shadow-md rounded bg-slate-400 text-white w-16 h-8">Enter</button>
     </form>
-    <div> <p><%= request.getAttribute("tasks")%> </p></div>
+    <ul id="task-list">
+        <c:forEach var="row" items="${tasks}">
+            <li id=${row.id}>${row.task} time: ${row.time}</li>
+        </c:forEach>
+    </ul>
+
 </div>
 </body>
 </html>
