@@ -106,7 +106,34 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
 
+        int doneTaskId = Integer.parseInt(req.getParameter("done"));
+
+        try {
+            // Connect to MySQL server
+            con = ds.getConnection();
+
+            // Check and Create Database and Table
+            stmt = con.createStatement();
+            stmt.executeUpdate("USE todolist");
+
+            String updateQuery = "UPDATE TASKS SET done = NOT done WHERE task_id = ?";
+            preparedStatement = con.prepareStatement(updateQuery);
+            preparedStatement.setInt(1, doneTaskId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if(rowsAffected > 0) {
+                System.out.println("Task with ID " + doneTaskId + " has been updated successfully");
+            } else {
+                System.out.println("No task found with ID " + doneTaskId + ".");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.println("An error occurred: " + e.getMessage());
+        }
     }
 
     @Override
