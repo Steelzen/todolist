@@ -14,7 +14,6 @@
 <head>
     <title>Dashboard</title>
     <style><%@include file="/WEB-INF/output.css"%></style>
-    <script><%@include file="/WEB-INF/script.js"%></script>
 </head>
 <body>
 <div class="flex justify-center my-10 mx-10">
@@ -32,10 +31,10 @@
     </form>
     <ul id="task-list">
         <c:forEach var="row" items="${tasks}">
-            <li id=${row.id}>${row.task} time: ${row.time}</li>
+            <li id="${row.id}" class="cursor-pointer hover:bg-slate-300" onclick="">${row.task} time: ${row.time} <span class="delete-task cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
         </c:forEach>
     </ul>
-
 </div>
+<script><%@include file="/WEB-INF/script.js"%></script>
 </body>
 </html>

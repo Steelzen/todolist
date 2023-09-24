@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-@WebServlet(name="taskListServlet", urlPatterns = "/tasks")
+@WebServlet(name="taskListServlet", urlPatterns = {"/tasks", "/tasks/*"})
 public class TaskListServlet extends HttpServlet implements DataBaseEnv {
     private Connection con = null;
     private Statement stmt = null;
@@ -111,5 +111,33 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
+
+        int delTaskId = Integer.parseInt(req.getParameter("del"));
+
+        try {
+            // Connect to MySQL server
+            con = ds.getConnection();
+
+            // Check and Create Database and Table
+            stmt = con.createStatement();
+            stmt.executeUpdate("USE todolist");
+
+            String deleteQuery = "DELETE FROM TASKS WHERE task_id = ?";
+            preparedStatement = con.prepareStatement(deleteQuery);
+            preparedStatement.setInt(1,delTaskId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if(rowsAffected > 0) {
+                System.out.println("Task with ID " + delTaskId + " has been deleted successfully");
+            } else {
+                System.out.println("No task found with ID " + delTaskId + ".");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.println("An error occurred: " + e.getMessage());
+        }
     }
 }

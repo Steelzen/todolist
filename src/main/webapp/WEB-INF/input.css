@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+ul li:nth-child(odd) {
+    @apply bg-slate-100;
+}
+
+ul li:nth-child(even) {
+    @apply bg-gray-200;
+}

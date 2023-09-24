@@ -33,3 +33,29 @@ function handleCreateAccountSubmit() {
 function handleLogin() {
     console.log("Log in");
 }
+
+// Click on delete button to remove task from current list
+var deleteTask = document.getElementsByClassName("delete-task");
+for(var i = 0; i < deleteTask.length; i++) {
+    deleteTask[i].onclick = function() {
+        var liId = this.parentElement.id;
+
+        // delete request with http
+        fetch('/tasks/?del=' + liId, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if(response.ok) {
+                    console.log("Success delete");
+                    // remove li element from DOM
+                    var liElement = document.getElementById(liId);
+                    if(liElement) liElement.remove();
+                } else {
+                    return response.text().then(text => Promise.reject(text));
+                }
+            })
+            .catch((error) => {
+                console.log('Error: ', error);
+            })
+    }
+}
