@@ -13,8 +13,8 @@
         </h1>
     </div>
     <form action="login" method="post" class="flex flex-col flex-wrap items-center mb-5" onsubmit="handleLogin()">
-        <input type="text" name="username" class="form-input rounded text-pink-500 mb-5" placeholder="Username" required minlength="3"/>
-        <input type="password" name="password" class="form-input rounded text-pink-500 mb-5" placeholder="Password" required minlength="6"/>
+        <input type="text" name="username" class="form-input rounded text-blue-600 mb-5" placeholder="Username" required minlength="3"/>
+        <input type="password" name="password" class="form-input rounded text-blue-600 mb-5" placeholder="Password" required minlength="6"/>
         <% if(request.getAttribute("errorMessage") != null) { %>
         <p class="text-red-500 mb-3"><%= request.getAttribute("errorMessage") %></p>
         <% } %>

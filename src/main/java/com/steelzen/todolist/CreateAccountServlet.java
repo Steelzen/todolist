@@ -19,9 +19,6 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
     private PreparedStatement preparedStatement = null;
     private HikariDataSource ds = DataSource.getDataSource();
 
-//    private String adminUsername = "admin";
-//    private String hashedAdminPassword = BCrypt.hashpw("Zkxksk88!!", BCrypt.gensalt());
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
@@ -41,13 +38,6 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS todolist");
             stmt.executeUpdate("USE todolist");
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS USERS (id INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR(50) UNIQUE NOT NULL, hashed_password VARCHAR(128) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
-
-//            // Populate USERS table with Admin conditionally
-//            ResultSet rsCount = stmt.executeQuery("SELECT COUNT(*) FROM USERS");
-//            if(rsCount.next() && rsCount.getInt(1) == 0) {
-//                stmt.executeUpdate("INSERT INTO USERS (username, hashed_password, created_at) VALUES ('" + adminUsername + "', '" + hashedAdminPassword + "', NOW())");
-//            };
-//            rsCount.close();
 
             // Execute a query to fetch data
             ResultSet rs = stmt.executeQuery("SELECT * FROM USERS");
@@ -108,12 +98,6 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
             preparedStatement.setString(2, hashedPassword);
 
             preparedStatement.executeUpdate();
-
-//            //logic for ajax
-//            resp.setContentType("application/json");
-//            PrintWriter out = resp.getWriter();
-//            out.print("{\"status\":\"success\"}");
-//            out.flush();
 
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
