@@ -34,32 +34,45 @@ function handleLogin() {
     console.log("Log in");
 }
 
-// Add a "checked" symbol when clicking on a task list
+// Add a "done" tag when clicking on a task list
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
-    if(ev.target.tagName === 'LI') {
-        var clickedTaskId = document.getElementById(ev.target.id).id;
-        console.log(clickedTaskId);
+    var targetElement = ev.target;
+    var clickedTaskId;
 
-        // put http request to change done status
+    // Check if the clicked element is a p with class 'task'
+    if(ev.target.tagName === 'P') {
+        // Get the parent 'li' element
+        targetElement = ev.target.parentElement;
+        clickedTaskId = targetElement.id; // Getting the id from the 'li' element
+    } else if(ev.target.tagName === 'LI') {
+        clickedTaskId = ev.target.id;
+    }
+
+    if(clickedTaskId) {
+        console.log(clickedTaskId);
         fetch('/tasks/?done=' + clickedTaskId, {
             method: 'PUT',
         })
             .then(response => {
-            if(response.ok) {
-                console.log("Success done");
+                if(response.ok) {
+                    console.log("Success done");
 
-                // Toggle 'done' class on the li element
-                ev.target.classList.toggle('done');
-            } else {
-                return response.text().then(text => Promise.reject(text));
-            }
-        })
+                    // Toggle 'done' class on the li element
+                    if(ev.target.tagName === 'LI')
+                        ev.target.classList.toggle('done');
+                    else {
+                        ev.target.parentElement.classList.toggle('done');
+                    }
+                } else {
+                    return response.text().then(text => Promise.reject(text));
+                }
+            })
             .catch(error => {
                 console.log('Error: ' + error);
             })
     }
-})
+});
 
 // Click on delete button to remove task from current list
 var deleteTask = document.getElementsByClassName("delete-task");

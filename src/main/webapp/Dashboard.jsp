@@ -20,27 +20,31 @@
     <h1 class="text-xl"><%= "TO-DO List" %>
     </h1>
 </div>
-<div class="flex flex-col flex-wrap items-center ">
+<div class="flex flex-col flex-wrap items-center w-full">
+        <div class="flex flex-row flex-wrap items-center justify-center p-4 ">
 <h1>Welcome, <%= session.getAttribute("username") %></h1>
-    <form action="logout" method="post" class="mb-2">
-        <button type="submit" class="shadow-md rounded bg-slate-400 text-white w-16 h-8">Log out</button>
+    <form action="logout" method="post" class="ml-4">
+        <button type="submit" class="shadow-md rounded bg-slate-400 text-white hover:bg-slate-700 w-16 h-8">Log out</button>
     </form>
-    <form action="tasks" method="post">
-        <input type="text" name="task" placeholder="Enter task" required minlength="3">
-        <button type="submit" class="shadow-md rounded bg-slate-400 text-white w-16 h-8">Enter</button>
+        </div>
+    <div class="w-full max-w-2xl px-4">
+    <form action="tasks" method="post" class="flex">
+        <input type="text" name="task" class="flex-grow w-96 float-none" placeholder="Enter task" required minlength="3">
+        <button type="submit" class="bg-slate-400 text-white w-16 hover:bg-slate-700">Enter</button>
     </form>
-    <ul id="task-list">
+    <ul id="task-list" class="w-full">
         <c:forEach var="row" items="${tasks}">
             <c:choose>
                 <c:when test="${row.done}">
-                    <li id="${row.id}" class="done cursor-pointer hover:bg-slate-300"><span class="task">${row.task} time: ${row.time}</span> <span class="delete-task cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
+                    <li id="${row.id}" class="done flex items-center justify-between cursor-pointer hover:bg-slate-300 h-10 px-4"><p class="task flex-grow float-none">${row.task} </p> <span class="delete-task p-0 m-0 cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
                 </c:when>
                 <c:otherwise>
-                    <li id="${row.id}" class="cursor-pointer hover:bg-slate-300"><span class="task">${row.task} time: ${row.time}</span> <span class="delete-task cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
+                    <li id="${row.id}" class="flex items-center justify-between cursor-pointer hover:bg-slate-300 h-10 px-4"><p class="task flex-grow float-none">${row.task} </p> <span class="delete-task p-0 m-0 cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
     </ul>
+    </div>
 </div>
 <script><%@include file="/WEB-INF/script.js"%></script>
 </body>
