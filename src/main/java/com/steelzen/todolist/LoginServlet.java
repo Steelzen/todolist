@@ -75,6 +75,10 @@ public class LoginServlet extends HttpServlet implements DataBaseEnv {
                 req.getRequestDispatcher("/index.jsp").forward(req, resp);
                 resp.sendRedirect("index.jsp");
             }
+
+            // Close resources
+            con.close();
+            stmt.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
