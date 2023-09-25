@@ -2,10 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+ul li {
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 ul li:nth-child(odd) {
     @apply bg-slate-100;
 }
 
 ul li:nth-child(even) {
     @apply bg-gray-200;
+}
+
+ul li.done {
+    @apply bg-slate-500;
+    color: #fff;
+}
+
+ul li.done .task {
+    color: #fff;
+    text-decoration: line-through;
+}
+
+.done::before {
+    content: '\2713'; /* Unicode character for a check mark */
+    color: #fff;    /* Color of the check mark */
+    margin-right: 5px; /* Space between the check mark and the task */
 }

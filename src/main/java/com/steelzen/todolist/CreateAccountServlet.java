@@ -65,6 +65,9 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
             out.println("</table>");
 
             // Close resources
+            con.close();
+            stmt.close();
+            preparedStatement.close();
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,6 +119,10 @@ public class CreateAccountServlet extends HttpServlet implements DataBaseEnv{
             session.setAttribute("username", username);
             resp.sendRedirect("/tasks");
 
+            // Close resources
+            con.close();
+            stmt.close();
+            preparedStatement.close();
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
             if(e.getErrorCode() == 1062) {

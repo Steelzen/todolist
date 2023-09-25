@@ -31,7 +31,14 @@
     </form>
     <ul id="task-list">
         <c:forEach var="row" items="${tasks}">
-            <li id="${row.id}" class="cursor-pointer hover:bg-slate-300">${row.task} time: ${row.time} <span class="delete-task cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
+            <c:choose>
+                <c:when test="${row.done}">
+                    <li id="${row.id}" class="done cursor-pointer hover:bg-slate-300"><span class="task">${row.task} time: ${row.time}</span> <span class="delete-task cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
+                </c:when>
+                <c:otherwise>
+                    <li id="${row.id}" class="cursor-pointer hover:bg-slate-300"><span class="task">${row.task} time: ${row.time}</span> <span class="delete-task cursor-pointer hover:bg-violet-600 hover:text-white">&#xD7;</span></li>
+                </c:otherwise>
+            </c:choose>
         </c:forEach>
     </ul>
 </div>

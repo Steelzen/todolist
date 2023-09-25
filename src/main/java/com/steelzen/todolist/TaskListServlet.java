@@ -63,6 +63,11 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
             req.setAttribute("tasks", rows);
             req.getRequestDispatcher("Dashboard.jsp").forward(req, resp);
 
+            // Close resources
+            con.close();
+            stmt.close();
+            preparedStatement.close();
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             out.println("An error occurred: " + e.getMessage());
@@ -98,6 +103,11 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
 
            resp.sendRedirect("/tasks");
 
+            // Close resources
+            con.close();
+            stmt.close();
+            preparedStatement.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             out.println("An error occurred: " + e.getMessage());
@@ -130,6 +140,11 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
                 System.out.println("No task found with ID " + doneTaskId + ".");
             }
 
+            // Close resources
+            con.close();
+            stmt.close();
+            preparedStatement.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             out.println("An error occurred: " + e.getMessage());
@@ -161,6 +176,11 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
             } else {
                 System.out.println("No task found with ID " + delTaskId + ".");
             }
+
+            // Close resources
+            con.close();
+            stmt.close();
+            preparedStatement.close();
 
         } catch (Exception e) {
             e.printStackTrace();

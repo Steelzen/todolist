@@ -17,8 +17,8 @@ public class DataSource implements DataBaseEnv {
             System.out.println(e.getMessage());
         }
         config.setJdbcUrl(mySqlUrl);
-        config.setUsername(rootUser);
-        config.setPassword(rootPassword);
+        config.setUsername(username);
+        config.setPassword(password);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

@@ -938,6 +938,13 @@ select {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+ul li {
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 ul li:nth-child(odd) {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
@@ -946,6 +953,26 @@ ul li:nth-child(odd) {
 ul li:nth-child(even) {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+ul li.done {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+  color: #fff;
+}
+
+ul li.done .task {
+  color: #fff;
+  text-decoration: line-through;
+}
+
+.done::before {
+  content: '\2713';
+  /* Unicode character for a check mark */
+  color: #fff;
+  /* Color of the check mark */
+  margin-right: 5px;
+  /* Space between the check mark and the task */
 }
 
 .hover\:bg-blue-600:hover {
