@@ -22,6 +22,6 @@ Web-based to-do list application with user authentication, developed using Java,
 ### Live Demo
 http://ec2-34-255-214-49.eu-west-1.compute.amazonaws.com:8080/ 
 
-(Live demo address has been changed)
+(Live demo address has been changed on 05/10/2023)
 
 
