@@ -5,7 +5,7 @@
 ### Run in local
 1. Make sure docker and docker-compose have been installed on your device.
 
-2. Pull the tomcat docer image.
+2. Pull the tomcat docker image.
 <pre>docker pull tomcat:10.0</pre>
 
 4. In root folder, navigate to /deploy/docker, and execute following command. 
