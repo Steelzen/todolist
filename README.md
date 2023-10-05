@@ -20,6 +20,8 @@ Web-based to-do list application with user authentication, developed using Java,
 5. Can access to app at http://localhost:8080.
 
 ### Live Demo
-http://ec2-54-216-41-245.eu-west-1.compute.amazonaws.com:8080/
+http://ec2-34-255-214-49.eu-west-1.compute.amazonaws.com:8080/ 
+
+(Live demo address has been changed)
 
 
