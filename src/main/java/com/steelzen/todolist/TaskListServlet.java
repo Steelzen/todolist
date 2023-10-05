@@ -34,6 +34,11 @@ public class TaskListServlet extends HttpServlet implements DataBaseEnv {
             session = req.getSession();
             String username = (String) session.getAttribute("username");
 
+            // If user logged out, redirect to index page
+            if(username == null) {
+                resp.sendRedirect("/");
+            }
+
             // Connect to MySQL server
             con = ds.getConnection();
 
