@@ -8,7 +8,7 @@
 2. Pull the tomcat docer image.
 <pre>docker pull tomcat:10.0</pre>
 
-4. In root folder, navigate to /deploy/docker execute following command. 
+4. In root folder, navigate to /deploy/docker, and execute following command. 
 <pre>docker-compose up</pre>
 
 3. Can access to app at http://localhost:8080.
