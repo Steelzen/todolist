@@ -5,7 +5,10 @@
 ### Run in local
 1. Make sure docker and docker-compose have been installed on your device.
 
-2. Pull the tomcat docker image.
+2. Clone the code
+<pre>git clone https://github.com/Steelzen/todolist.git</pre>
+
+4. Pull the tomcat docker image.
 <pre>docker pull tomcat:10.0</pre>
 
 4. In root folder, navigate to /deploy/docker, and execute following command. 
