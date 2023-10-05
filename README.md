@@ -8,13 +8,13 @@
 2. Clone the code
 <pre>git clone https://github.com/Steelzen/todolist.git</pre>
 
-4. Pull the tomcat docker image.
+3. Pull the tomcat docker image.
 <pre>docker pull tomcat:10.0</pre>
 
 4. In root folder, navigate to /deploy/docker, and execute following command. 
 <pre>docker-compose up</pre>
 
-3. Can access to app at http://localhost:8080.
+5. Can access to app at http://localhost:8080.
 
 ### Live Demo
 http://ec2-54-216-41-245.eu-west-1.compute.amazonaws.com:8080/
