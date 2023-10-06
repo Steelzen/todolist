@@ -14,8 +14,9 @@ Web-based to-do list application with user authentication, developed using Java,
 3. Pull the tomcat docker image.
 <pre>docker pull tomcat:10.0</pre>
 
-4. In root folder, navigate to /deploy/docker, and execute following command. 
-<pre>docker-compose up</pre>
+4. In root folder, navigate to /deploy/docker, and execute following commands.
+<pre>docker-compose build</pre> 
+<pre>docker-compose up </pre>
 
 5. Can access to app at http://localhost:8080.
 
