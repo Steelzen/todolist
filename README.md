@@ -21,7 +21,7 @@ Web-based to-do list application with user authentication, developed using Java,
 5. Can access to app at http://localhost:8080.
 
 ### Live Demo
-http://steelzen:8080/ 
+http://steelzen.me:8080/ 
 
 (Live demo address has been changed on 05/10/2023)
 
