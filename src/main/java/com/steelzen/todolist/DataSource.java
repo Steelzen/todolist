@@ -19,6 +19,11 @@ public class DataSource implements DataBaseEnv {
         config.setJdbcUrl(mySqlUrl);
         config.setUsername(username);
         config.setPassword(password);
+        config.setMaximumPoolSize(20); // Set based on your app needs
+        config.setMinimumIdle(5);
+        config.setConnectionTimeout(30000); // 30 seconds
+        config.setIdleTimeout(600000); // 10 minutes
+        config.setMaxLifetime(1800000); // 30 minutes
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
