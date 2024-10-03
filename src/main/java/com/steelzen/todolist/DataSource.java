@@ -22,6 +22,7 @@ public class DataSource implements DataBaseEnv {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setLeakDetectionThreshold(2000);
         ds = new HikariDataSource(config);
     }
 

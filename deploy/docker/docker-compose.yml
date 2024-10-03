@@ -8,6 +8,11 @@ services:
       - DATABASE_PASSWORD=my_password
     ports:
       - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
   db:
     image: "mysql:8.0"
     volumes:
